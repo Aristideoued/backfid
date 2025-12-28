@@ -17,7 +17,11 @@ public class PersonneDto {
     private LocalDate dateNaissance;
     private String sexe;
     private String nationalite;
+    private String telephone;
+    private String email;
+    private String adresse;
     private String photo;
     private String iu;
+    private String password;
 }
 

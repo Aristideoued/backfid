@@ -3,6 +3,7 @@ package com.wuri.demowuri.controller;
 
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,46 +13,58 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.wuri.demowuri.dto.LoginDto;
 import com.wuri.demowuri.dto.PersonneDto;
 import com.wuri.demowuri.services.PersonneService;
 
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/api/personnes")
 @RequiredArgsConstructor
 public class PersonneController {
 
-    private final PersonneService userService;
+    private final PersonneService personneService;
 
     @PostMapping
-    public PersonneDto create(@RequestBody PersonneDto userDto) {
-        return userService.createUser(userDto);
+    public PersonneDto create(@RequestBody PersonneDto personneDto) {
+        return personneService.createPersonne(personneDto);
     }
 
     @GetMapping("/{id}")
     public PersonneDto getById(@PathVariable Long id) {
-        return userService.getUserById(id);
+        return personneService.getPersonneById(id);
     }
 
     @GetMapping("/iu/{iu}")
     public PersonneDto getByIu(@PathVariable String iu) {
-        return userService.getUserByIu(iu);
+        return personneService.getPersonneByIu(iu);
     }
 
     @GetMapping
     public List<PersonneDto> getAll() {
-        return userService.getAllUsers();
+        return personneService.getAllPersonnes();
     }
 
     @PutMapping("/{id}")
-    public PersonneDto update(@PathVariable Long id, @RequestBody PersonneDto userDto) {
-        return userService.updateUser(id, userDto);
+    public PersonneDto update(@PathVariable Long id, @RequestBody PersonneDto personneDto) {
+        return personneService.updatePersonne(id, personneDto);
     }
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
-        userService.deleteUser(id);
+        personneService.deletePersonne(id);
+    }
+
+     @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody LoginDto request) {
+
+        PersonneDto personne = personneService.authentifier(
+                request.getIu(),
+                request.getPassword()
+        );
+
+        return ResponseEntity.ok(personne);
     }
 }
 

@@ -29,9 +29,15 @@ public class Personne {
     private String sexe; // M / F
 
     private String nationalite;
+    private String telephone;
+    private String email;
+    private String adresse;
 
     private String photo; // URL ou chemin du fichier
 
     @Column(nullable = false, unique = true, length = 12)
     private String iu; // Identifiant Unique
+
+    @Column(nullable = true)
+    private String password; // 🔐 mot de passe hashé
 }

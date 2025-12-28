@@ -4,6 +4,7 @@
 /home/aristide/Bureau/Wuri/backfid/src/main/java/com/wuri/demowuri/controller/PersonneController.java
 /home/aristide/Bureau/Wuri/backfid/src/main/java/com/wuri/demowuri/controller/RoleController.java
 /home/aristide/Bureau/Wuri/backfid/src/main/java/com/wuri/demowuri/controller/UserController.java
+/home/aristide/Bureau/Wuri/backfid/src/main/java/com/wuri/demowuri/dto/LoginDto.java
 /home/aristide/Bureau/Wuri/backfid/src/main/java/com/wuri/demowuri/dto/PersonneDto.java
 /home/aristide/Bureau/Wuri/backfid/src/main/java/com/wuri/demowuri/dto/RoleDto.java
 /home/aristide/Bureau/Wuri/backfid/src/main/java/com/wuri/demowuri/dto/UserDto.java

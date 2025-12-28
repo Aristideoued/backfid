@@ -1,23 +1,30 @@
 package com.wuri.demowuri.services;
 
-
-
+import java.io.IOException;
 import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.core.io.Resource;
 
 import com.wuri.demowuri.dto.PersonneDto;
 
 public interface PersonneService {
 
-    PersonneDto createUser(PersonneDto userDto);
+    PersonneDto createPersonne(PersonneDto userDto);
 
-    PersonneDto getUserById(Long id);
+    PersonneDto getPersonneById(Long id);
 
-    PersonneDto getUserByIu(String iu);
+    PersonneDto authentifier(String iu, String password);
 
-    List<PersonneDto> getAllUsers();
+    PersonneDto getPersonneByIu(String iu);
 
-    PersonneDto updateUser(Long id, PersonneDto userDto);
+    List<PersonneDto> getAllPersonnes();
 
-    void deleteUser(Long id);
+    PersonneDto updatePersonne(Long id, PersonneDto userDto);
+
+    void deletePersonne(Long id);
+
+    Resource getPhoto(String iu) throws IOException;
+
+    String uploadPhoto(String iu, MultipartFile file) throws IOException;
 }
-
