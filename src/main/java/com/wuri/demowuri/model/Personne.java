@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.List;
+
+import com.wuri.demowuri.enums.EtatPersonne;
 
 @Entity
 @Table(name = "personnes")
@@ -40,4 +43,12 @@ public class Personne {
 
     @Column(nullable = true)
     private String password; // 🔐 mot de passe hashé
+
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private EtatPersonne etat;
+
+    @OneToMany(mappedBy = "personne", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Document> documents;
 }

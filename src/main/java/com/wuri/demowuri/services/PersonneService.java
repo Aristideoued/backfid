@@ -3,8 +3,8 @@ package com.wuri.demowuri.services;
 import java.io.IOException;
 import java.util.List;
 
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.core.io.Resource;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.wuri.demowuri.dto.PersonneDto;
 
@@ -27,4 +27,8 @@ public interface PersonneService {
     Resource getPhoto(String iu) throws IOException;
 
     String uploadPhoto(String iu, MultipartFile file) throws IOException;
+
+     PersonneDto activerPersonne(Long id);
+
+    PersonneDto desactiverPersonne(Long id);
 }

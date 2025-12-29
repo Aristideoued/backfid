@@ -9,17 +9,18 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.wuri.demowuri.dto.PersonneDto;
+import com.wuri.demowuri.enums.EtatPersonne;
 import com.wuri.demowuri.mapper.PersonneMapper;
 import com.wuri.demowuri.model.Personne;
 import com.wuri.demowuri.repository.PersonneRepository;
 import com.wuri.demowuri.services.PersonneService;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
 
 import lombok.RequiredArgsConstructor;
 
@@ -41,9 +42,12 @@ public class PersonneServiceImpl implements PersonneService {
         // IU toujours généré côté backend
         String iu = generateUniqueIU();
         userDto.setIu(iu);
+        
+
         userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
 
         Personne user = personneMapper.toEntity(userDto);
+        user.setEtat(EtatPersonne.ACTIF);
         return personneMapper.toDto(personneRepository.save(user));
     }
 
@@ -108,6 +112,11 @@ public class PersonneServiceImpl implements PersonneService {
         user.setNationalite(userDto.getNationalite());
         user.setPhoto(userDto.getPhoto());
 
+         if (userDto.getPassword() != null && !userDto.getPassword().isBlank()) {
+            user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+        }
+
+
         return personneMapper.toDto(personneRepository.save(user));
     }
 
@@ -166,5 +175,25 @@ public class PersonneServiceImpl implements PersonneService {
         }
 
         return resource;
+    }
+
+    @Override
+    public PersonneDto activerPersonne(Long id) {
+        Personne personne = personneRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Personne introuvable"));
+
+        personne.setEtat(EtatPersonne.ACTIF);
+
+        return personneMapper.toDto(personneRepository.save(personne));
+    }
+
+    @Override
+    public PersonneDto desactiverPersonne(Long id) {
+        Personne personne = personneRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Personne introuvable"));
+
+        personne.setEtat(EtatPersonne.INACTIF);
+
+        return personneMapper.toDto(personneRepository.save(personne));
     }
 }

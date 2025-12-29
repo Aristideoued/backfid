@@ -66,5 +66,15 @@ public class PersonneController {
 
         return ResponseEntity.ok(personne);
     }
+
+    @PutMapping("/{id}/activer")
+    public ResponseEntity<PersonneDto> activer(@PathVariable Long id) {
+        return ResponseEntity.ok(personneService.activerPersonne(id));
+    }
+
+    @PutMapping("/{id}/desactiver")
+    public ResponseEntity<PersonneDto> desactiver(@PathVariable Long id) {
+        return ResponseEntity.ok(personneService.desactiverPersonne(id));
+    }
 }
 
