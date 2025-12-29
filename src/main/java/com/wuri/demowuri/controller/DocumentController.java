@@ -1,6 +1,5 @@
 package com.wuri.demowuri.controller;
 
-
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
@@ -76,5 +75,10 @@ public class DocumentController {
         List<DocumentDto> documents = documentService.getByTypeLibelleAndPersonneId(typeLibelle, personneId);
         return ResponseEntity.ok(documents);
     }
-}
 
+    @GetMapping("/personnes/{id}/documents")
+    public List<DocumentDto> getDocumentsByPersonne(@PathVariable Long id) {
+        return documentService.getByPersonne(id);
+    }
+
+}

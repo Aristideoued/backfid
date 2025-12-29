@@ -26,7 +26,6 @@ public class PersonneDto {
     private String photo;
     private String iu;
     private String password;
-    private List<DocumentDto> documents;
     private EtatPersonne etat;
 }
 

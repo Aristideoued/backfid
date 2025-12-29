@@ -18,8 +18,7 @@ public class DocumentDto {
 
     private TypeDocumentDto typeDocument;
     private AutoriteDto autorite;
-    private PersonneDto personne;
-
+    private Long personneId; 
     private EtatDocument etat;
 }
 

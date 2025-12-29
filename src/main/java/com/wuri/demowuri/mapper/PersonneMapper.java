@@ -36,20 +36,14 @@ public PersonneDto toDto(Personne personne) {
                 .adresse(personne.getAdresse())
                 .photo(personne.getPhoto())
                 .iu(personne.getIu())
-                .password(personne.getPassword())
                 .etat(personne.getEtat())
-                .documents(personne.getDocuments() != null ?
-                        personne.getDocuments().stream()
-                                .map(documentMapper::toDto)
-                                .collect(Collectors.toList())
-                        : Collections.emptyList())
                 .build();
     }
 
     public Personne toEntity(PersonneDto dto) {
         if (dto == null) return null;
 
-        Personne personne = Personne.builder()
+        return Personne.builder()
                 .id(dto.getId())
                 .nom(dto.getNom())
                 .prenom(dto.getPrenom())
@@ -61,19 +55,8 @@ public PersonneDto toDto(Personne personne) {
                 .adresse(dto.getAdresse())
                 .photo(dto.getPhoto())
                 .iu(dto.getIu())
-                .password(dto.getPassword())
                 .etat(dto.getEtat())
                 .build();
-
-        if (dto.getDocuments() != null) {
-            List<Document> documents = dto.getDocuments().stream()
-                    .map(documentMapper::toEntity)
-                    .peek(d -> d.setPersonne(personne)) // lier chaque document à la personne
-                    .collect(Collectors.toList());
-            personne.setDocuments(documents);
-        }
-
-        return personne;
     }
 }
 

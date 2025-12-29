@@ -108,4 +108,14 @@ public class DocumentServiceImpl implements DocumentService {
                 .map(documentMapper::toDto)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public List<DocumentDto> getByPersonne(Long personneId) {
+
+        return documentRepository.findByPersonneId(personneId)
+                .stream()
+                .map(documentMapper::toDto)
+                .toList();
+    }
+
 }

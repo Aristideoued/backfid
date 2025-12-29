@@ -5,24 +5,22 @@ import org.springframework.stereotype.Component;
 import com.wuri.demowuri.dto.DocumentDto;
 import com.wuri.demowuri.dto.PersonneDto;
 import com.wuri.demowuri.model.Document;
+import com.wuri.demowuri.model.Personne;
 
 @Component
 public class DocumentMapper {
     private final TypeDocumentMapper typeDocumentMapper;
     private final AutoriteMapper autoriteMapper;
 
-    private final PersonneMapper personneMapper;
 
-
-    public DocumentMapper(TypeDocumentMapper typeDocumentMapper, AutoriteMapper autoriteMapper,PersonneMapper personneMapper) {
+    public DocumentMapper(TypeDocumentMapper typeDocumentMapper, AutoriteMapper autoriteMapper) {
         this.typeDocumentMapper = typeDocumentMapper;
         this.autoriteMapper = autoriteMapper;
-        this.personneMapper=personneMapper;
     }
-  
 
-   public DocumentDto toDto(Document document) {
-        if (document == null) return null;
+    public DocumentDto toDto(Document document) {
+        if (document == null)
+            return null;
 
         PersonneDto personneDto = null;
         if (document.getPersonne() != null) {
@@ -40,13 +38,15 @@ public class DocumentMapper {
                 .data(document.getData())
                 .typeDocument(typeDocumentMapper.toDto(document.getType()))
                 .autorite(autoriteMapper.toDto(document.getAutorite()))
-                .personne(personneDto)
+                .personneId(
+                        document.getPersonne() != null ? document.getPersonne().getId() : null)
                 .etat(document.getEtat()) // Enum EtatDocument
                 .build();
     }
 
-       public Document toEntity(DocumentDto dto) {
-        if (dto == null) return null;
+    public Document toEntity(DocumentDto dto) {
+        if (dto == null)
+            return null;
 
         Document document = Document.builder()
                 .id(dto.getId())
@@ -59,12 +59,8 @@ public class DocumentMapper {
                 .etat(dto.getEtat()) // Enum EtatDocument
                 .build();
 
-        if (dto.getPersonne() != null && dto.getPersonne().getId() != null) {
-            document.setPersonne(
-                    com.wuri.demowuri.model.Personne.builder()
-                            .id(dto.getPersonne().getId())
-                            .build()
-            );
+        if (dto.getPersonneId() != null) {
+            document.setPersonne(Personne.builder().id(dto.getPersonneId()).build());
         }
 
         return document;

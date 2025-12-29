@@ -1,10 +1,14 @@
 package com.wuri.demowuri.repository;
 
 import java.time.LocalDate;
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import com.wuri.demowuri.dto.DocumentDto;
+import com.wuri.demowuri.dto.QrCodeDto;
+import com.wuri.demowuri.enums.EtatDocument;
 import com.wuri.demowuri.model.Document;
 
 public interface DocumentRepository extends JpaRepository<Document, Long> {
@@ -27,4 +31,10 @@ public interface DocumentRepository extends JpaRepository<Document, Long> {
     List<Document> findByTypeIdAndAutoriteId(Long typeId, Long autoriteId);
 
     List<Document> findByTypeLibelleAndPersonneId(String libelle, Long personneId);
+
+    //Collection<QrCodeDto> findByPersonneIdAndEtat(Long personneId, EtatDocument valide);
+
+    List<Document> findByPersonneIdAndEtat(Long personneId, EtatDocument etat);
+
+    List<Document> findByPersonneId(Long personneId);
 }

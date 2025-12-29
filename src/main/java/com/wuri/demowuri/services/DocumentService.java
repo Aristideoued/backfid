@@ -18,4 +18,6 @@ public interface DocumentService {
     List<DocumentDto> getByAutorite(Long autoriteId);
 
     List<DocumentDto> getByTypeLibelleAndPersonneId(String typeLibelle, Long personneId);
+
+    List<DocumentDto> getByPersonne(Long personneId);
 }
