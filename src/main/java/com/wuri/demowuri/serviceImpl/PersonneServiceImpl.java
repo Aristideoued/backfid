@@ -63,14 +63,14 @@ public class PersonneServiceImpl implements PersonneService {
     @Override
     public PersonneDto authentifier(String iu, String password) {
 
-        PersonneDto personne = personneRepository.findByIu(iu)
+        Personne personne = personneRepository.findByIu(iu)
                 .orElseThrow(() -> new RuntimeException("IU incorrect"));
 
         if (!passwordEncoder.matches(password, personne.getPassword())) {
             throw new RuntimeException("Mot de passe incorrect");
         }
 
-        return personne;
+        return personneMapper.toDto(personne) ;
     }
 
     private String generate12DigitNumber() {
@@ -87,9 +87,10 @@ public class PersonneServiceImpl implements PersonneService {
 
     @Override
     public PersonneDto getPersonneByIu(String iu) {
-        return personneRepository.findByIu(iu)
+        Personne personne= personneRepository.findByIu(iu)
 
                 .orElseThrow(() -> new RuntimeException("Utilisateur introuvable"));
+        return  personneMapper.toDto(personne);
     }
 
     @Override
@@ -128,7 +129,7 @@ public class PersonneServiceImpl implements PersonneService {
     @Override
     public String uploadPhoto(String iu, MultipartFile file) throws IOException {
 
-        PersonneDto personne = personneRepository.findByIu(iu)
+        Personne personne = personneRepository.findByIu(iu)
                 .orElseThrow(() -> new RuntimeException("Personne introuvable"));
 
         // 📁 photos/{iu}
@@ -151,7 +152,7 @@ public class PersonneServiceImpl implements PersonneService {
         // Enregistrer le chemin en base
         String relativePath = photosBaseDir + "/" + iu + "/photo.png";
         personne.setPhoto(relativePath);
-        personneRepository.save(personneMapper.toEntity(personne));
+        personneRepository.save(personne);
 
         return relativePath;
     }
@@ -160,7 +161,7 @@ public class PersonneServiceImpl implements PersonneService {
     @Override
     public Resource getPhoto(String iu) throws IOException {
 
-        PersonneDto personne = personneRepository.findByIu(iu)
+        Personne personne = personneRepository.findByIu(iu)
                 .orElseThrow(() -> new RuntimeException("Personne introuvable"));
 
         if (personne.getPhoto() == null) {
