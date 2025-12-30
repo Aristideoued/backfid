@@ -12,29 +12,29 @@ import com.wuri.demowuri.services.NotificationService;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/api/notifications")
+@RequestMapping("/api/v1/notifications")
 @RequiredArgsConstructor
 public class NotificationController {
 
     private final NotificationService service;
 
-    @PostMapping
+    @PostMapping("creer")
     public ResponseEntity<NotificationDto> create(@RequestBody NotificationDto dto) {
         return ResponseEntity.ok(service.create(dto));
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<NotificationDto> update(@PathVariable Long id, @RequestBody NotificationDto dto) {
         return ResponseEntity.ok(service.update(id, dto));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/getById/{id}")
     public ResponseEntity<NotificationDto> getById(@PathVariable Long id) {
         return ResponseEntity.ok(service.getById(id));
     }

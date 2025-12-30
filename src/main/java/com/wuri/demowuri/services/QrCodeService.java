@@ -20,6 +20,6 @@ public interface QrCodeService {
 
     List<QrCodeDto> findActifsByPersonne(Long personneId);
 
-    QrCodeDto findByCode(String code);
+    QrCodeDto findByToken(String code);
 }
 

@@ -107,7 +107,7 @@ public QrCodeDto create(QrCodeDto dto) {
     }
 
     @Override
-    public QrCodeDto findByCode(String code) {
+    public QrCodeDto findByToken(String code) {
         return repository.findByToken(code)
                 .map(mapper::toDto)
                 .orElseThrow(() -> new RuntimeException("QR Code invalide ou inexistant"));

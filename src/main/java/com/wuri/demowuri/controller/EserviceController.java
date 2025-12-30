@@ -11,34 +11,34 @@ import com.wuri.demowuri.services.EserviceService;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/api/eservices")
+@RequestMapping("/api/v1/eservices")
 @RequiredArgsConstructor
 public class EserviceController {
 
     private final EserviceService service;
 
-    @PostMapping
+    @PostMapping("creer")
     public ResponseEntity<EserviceDto> create(@RequestBody EserviceDto dto) {
         return ResponseEntity.ok(service.create(dto));
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<EserviceDto> update(@PathVariable Long id, @RequestBody EserviceDto dto) {
         return ResponseEntity.ok(service.update(id, dto));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/getById/{id}")
     public ResponseEntity<EserviceDto> getById(@PathVariable Long id) {
         return ResponseEntity.ok(service.getById(id));
     }
 
-    @GetMapping
+    @GetMapping("all")
     public ResponseEntity<List<EserviceDto>> findAll() {
         return ResponseEntity.ok(service.findAll());
     }

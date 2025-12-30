@@ -26,18 +26,18 @@ import com.wuri.demowuri.services.PersonneService;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/api/personnes")
+@RequestMapping("/api/v1/personnes")
 @RequiredArgsConstructor
 public class PersonneController {
 
     private final PersonneService personneService;
 
-    @PostMapping
+    @PostMapping("creer")
     public PersonneDto create(@RequestBody PersonneDto personneDto) {
         return personneService.createPersonne(personneDto);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/getById/{id}")
     public PersonneDto getById(@PathVariable Long id) {
         return personneService.getPersonneById(id);
     }
@@ -47,17 +47,17 @@ public class PersonneController {
         return personneService.getPersonneByIu(iu);
     }
 
-    @GetMapping
+    @GetMapping("all")
     public List<PersonneDto> getAll() {
         return personneService.getAllPersonnes();
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/update/{id}")
     public PersonneDto update(@PathVariable Long id, @RequestBody PersonneDto personneDto) {
         return personneService.updatePersonne(id, personneDto);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public void delete(@PathVariable Long id) {
         personneService.deletePersonne(id);
     }
@@ -99,7 +99,7 @@ public class PersonneController {
                         "path", path));
     }
 
-    @GetMapping("/{iu}/photo")
+    @GetMapping("/photo/{iu}")
     public ResponseEntity<Resource> getPhoto(@PathVariable String iu) throws IOException {
 
         Resource photo = personneService.getPhoto(iu);

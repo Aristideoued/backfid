@@ -17,42 +17,42 @@ import com.wuri.demowuri.services.DocumentService;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/api/documents")
+@RequestMapping("/api/v1/documents")
 @RequiredArgsConstructor
 public class DocumentController {
 
     private final DocumentService documentService;
 
     // 🔹 Créer un document
-    @PostMapping
+    @PostMapping("creer")
     public ResponseEntity<DocumentDto> create(@RequestBody DocumentDto dto) {
         DocumentDto created = documentService.create(dto);
         return ResponseEntity.ok(created);
     }
 
     // 🔹 Mettre à jour un document
-    @PutMapping("/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<DocumentDto> update(@PathVariable Long id, @RequestBody DocumentDto dto) {
         DocumentDto updated = documentService.update(id, dto);
         return ResponseEntity.ok(updated);
     }
 
     // 🔹 Supprimer un document
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         documentService.delete(id);
         return ResponseEntity.noContent().build();
     }
 
     // 🔹 Récupérer un document par ID
-    @GetMapping("/{id}")
+    @GetMapping("/getById/{id}")
     public ResponseEntity<DocumentDto> getById(@PathVariable Long id) {
         DocumentDto document = documentService.getById(id);
         return ResponseEntity.ok(document);
     }
 
     // 🔹 Récupérer tous les documents
-    @GetMapping
+    @GetMapping("all")
     public ResponseEntity<List<DocumentDto>> findAll() {
         List<DocumentDto> documents = documentService.findAll();
         return ResponseEntity.ok(documents);
@@ -104,7 +104,7 @@ public class DocumentController {
                         "path", path));
     }
 
-    @GetMapping("/{iu}/photo")
+    @GetMapping("/photo/{documentId}")
     public ResponseEntity<Resource> getPhoto(@PathVariable Long documentId) throws IOException {
 
         Resource photo = documentService.getPhoto(documentId);

@@ -19,7 +19,7 @@ import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/api/qrcodes")
+@RequestMapping("/api/v1/qrcodes")
 @RequiredArgsConstructor
 public class QrCodeController {
 
@@ -30,28 +30,28 @@ public class QrCodeController {
     private final PersonneRepository personneRepository;
     private final DocumentRepository documentRepository;
 
-    @PostMapping
+    @PostMapping("creer")
     public ResponseEntity<QrCodeDto> create(@RequestBody QrCodeDto dto) {
         return ResponseEntity.ok(service.create(dto));
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<QrCodeDto> update(@PathVariable Long id, @RequestBody QrCodeDto dto) {
         return ResponseEntity.ok(service.update(id, dto));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/getById/{id}")
     public ResponseEntity<QrCodeDto> getById(@PathVariable Long id) {
         return ResponseEntity.ok(service.getById(id));
     }
 
-    @GetMapping
+    @GetMapping("all")
     public ResponseEntity<List<QrCodeDto>> findAll() {
         return ResponseEntity.ok(service.findAll());
     }
@@ -94,7 +94,7 @@ public class QrCodeController {
     }
 
     @GetMapping("/scan/{code}")
-    public ResponseEntity<QrCodeDto> scanQrCode(@PathVariable String code) {
-        return ResponseEntity.ok(service.findByCode(code));
+    public ResponseEntity<QrCodeDto> scanQrCode(@PathVariable String token) {
+        return ResponseEntity.ok(service.findByToken(token));
     }
 }

@@ -12,34 +12,34 @@ import com.wuri.demowuri.services.TypeDocumentService;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/api/types")
+@RequestMapping("/api/v1/typedocuments")
 @RequiredArgsConstructor
 public class TypeDocumentController {
 
     private final TypeDocumentService service;
 
-    @PostMapping
+    @PostMapping("creer")
     public ResponseEntity<TypeDocumentDto> create(@RequestBody TypeDocumentDto dto) {
         return ResponseEntity.ok(service.create(dto));
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<TypeDocumentDto> update(@PathVariable Long id, @RequestBody TypeDocumentDto dto) {
         return ResponseEntity.ok(service.update(id, dto));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/getById/{id}")
     public ResponseEntity<TypeDocumentDto> getById(@PathVariable Long id) {
         return ResponseEntity.ok(service.getById(id));
     }
 
-    @GetMapping
+    @GetMapping("all")
     public ResponseEntity<List<TypeDocumentDto>> findAll() {
         return ResponseEntity.ok(service.findAll());
     }

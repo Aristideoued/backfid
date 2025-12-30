@@ -4,6 +4,7 @@
 /home/aristide/Bureau/Wuri/backfid/src/main/java/com/wuri/demowuri/controller/AutoriteController.java
 /home/aristide/Bureau/Wuri/backfid/src/main/java/com/wuri/demowuri/controller/DocumentController.java
 /home/aristide/Bureau/Wuri/backfid/src/main/java/com/wuri/demowuri/controller/EserviceController.java
+/home/aristide/Bureau/Wuri/backfid/src/main/java/com/wuri/demowuri/controller/LogController.java
 /home/aristide/Bureau/Wuri/backfid/src/main/java/com/wuri/demowuri/controller/NotificationController.java
 /home/aristide/Bureau/Wuri/backfid/src/main/java/com/wuri/demowuri/controller/PersonneController.java
 /home/aristide/Bureau/Wuri/backfid/src/main/java/com/wuri/demowuri/controller/QrCodeController.java
@@ -60,6 +61,7 @@
 /home/aristide/Bureau/Wuri/backfid/src/main/java/com/wuri/demowuri/serviceImpl/AutoriteServiceImpl.java
 /home/aristide/Bureau/Wuri/backfid/src/main/java/com/wuri/demowuri/serviceImpl/DocumentServiceImpl.java
 /home/aristide/Bureau/Wuri/backfid/src/main/java/com/wuri/demowuri/serviceImpl/EserviceServiceImpl.java
+/home/aristide/Bureau/Wuri/backfid/src/main/java/com/wuri/demowuri/serviceImpl/LogServiceImpl.java
 /home/aristide/Bureau/Wuri/backfid/src/main/java/com/wuri/demowuri/serviceImpl/NotificationServiceImpl.java
 /home/aristide/Bureau/Wuri/backfid/src/main/java/com/wuri/demowuri/serviceImpl/PersonneServiceImpl.java
 /home/aristide/Bureau/Wuri/backfid/src/main/java/com/wuri/demowuri/serviceImpl/QrCodeServiceImpl.java
@@ -70,6 +72,7 @@
 /home/aristide/Bureau/Wuri/backfid/src/main/java/com/wuri/demowuri/services/CustomUserDetailsService.java
 /home/aristide/Bureau/Wuri/backfid/src/main/java/com/wuri/demowuri/services/DocumentService.java
 /home/aristide/Bureau/Wuri/backfid/src/main/java/com/wuri/demowuri/services/EserviceService.java
+/home/aristide/Bureau/Wuri/backfid/src/main/java/com/wuri/demowuri/services/LogService.java
 /home/aristide/Bureau/Wuri/backfid/src/main/java/com/wuri/demowuri/services/NotificationService.java
 /home/aristide/Bureau/Wuri/backfid/src/main/java/com/wuri/demowuri/services/PersonneService.java
 /home/aristide/Bureau/Wuri/backfid/src/main/java/com/wuri/demowuri/services/QrCodeService.java
