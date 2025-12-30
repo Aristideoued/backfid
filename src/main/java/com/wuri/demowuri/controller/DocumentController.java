@@ -1,9 +1,15 @@
 package com.wuri.demowuri.controller;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.wuri.demowuri.dto.DocumentDto;
 import com.wuri.demowuri.services.DocumentService;
@@ -79,6 +85,34 @@ public class DocumentController {
     @GetMapping("/personnes/{id}/documents")
     public List<DocumentDto> getDocumentsByPersonne(@PathVariable Long id) {
         return documentService.getByPersonne(id);
+    }
+
+    @PostMapping(value = "/{documentId}/photo", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Map<String, String>> uploadPhoto(
+            @PathVariable Long documentId,
+            @RequestParam("file") MultipartFile file) throws IOException {
+
+        if (file.isEmpty()) {
+            throw new RuntimeException("Fichier photo vide");
+        }
+
+        String path = documentService.uploadPhoto(documentId, file);
+
+        return ResponseEntity.ok(
+                Map.of(
+                        "message", "Photo uploadée avec succès",
+                        "path", path));
+    }
+
+    @GetMapping("/{iu}/photo")
+    public ResponseEntity<Resource> getPhoto(@PathVariable Long documentId) throws IOException {
+
+        Resource photo = documentService.getPhoto(documentId);
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.IMAGE_PNG) // photo.png
+                .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"photo.png\"")
+                .body(photo);
     }
 
 }

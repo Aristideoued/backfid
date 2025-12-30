@@ -20,5 +20,7 @@ public class DocumentDto {
     private AutoriteDto autorite;
     private Long personneId; 
     private EtatDocument etat;
+    private String photo;
+
 }
 

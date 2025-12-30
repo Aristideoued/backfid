@@ -30,6 +30,9 @@ public class Document {
     private LocalDate dateDelivrance;
     private LocalDate dateExpiration;
 
+    private String photo; // URL ou chemin du fichier
+
+
     // contenu numérique (URL ou chemin fichier)
     @Lob
     private String data;

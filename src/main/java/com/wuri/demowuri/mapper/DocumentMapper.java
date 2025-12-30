@@ -39,8 +39,9 @@ public class DocumentMapper {
                 .typeDocument(typeDocumentMapper.toDto(document.getType()))
                 .autorite(autoriteMapper.toDto(document.getAutorite()))
                 .personneId(
-                        document.getPersonne() != null ? document.getPersonne().getId() : null)
+                document.getPersonne() != null ? document.getPersonne().getId() : null)
                 .etat(document.getEtat()) // Enum EtatDocument
+                .photo(document.getPhoto())
                 .build();
     }
 
@@ -50,6 +51,7 @@ public class DocumentMapper {
 
         Document document = Document.builder()
                 .id(dto.getId())
+                .photo(dto.getPhoto())
                 .numero(dto.getNumero())
                 .dateDelivrance(dto.getDateDelivrance())
                 .dateExpiration(dto.getDateExpiration())

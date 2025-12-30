@@ -1,9 +1,18 @@
 package com.wuri.demowuri.serviceImpl;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.wuri.demowuri.dto.DocumentDto;
 import com.wuri.demowuri.enums.EtatDocument;
@@ -23,13 +32,15 @@ import lombok.RequiredArgsConstructor;
 public class DocumentServiceImpl implements DocumentService {
 
     private final DocumentRepository documentRepository;
-    private final TypeDocumentRepository typeRepository;
     private final AutoriteRepository autoriteRepository;
 
     private final DocumentMapper mapper;
 
     private final TypeDocumentRepository typeDocumentRepository;
     private final DocumentMapper documentMapper;
+
+    @Value("${app.photos.dir:photos}")
+    private String photosBaseDir;
 
     @Override
     public DocumentDto create(DocumentDto dto) {
@@ -118,4 +129,54 @@ public class DocumentServiceImpl implements DocumentService {
                 .toList();
     }
 
+    @Override
+    public String uploadPhoto(Long documentId, MultipartFile file) throws IOException {
+
+        Document document = documentRepository.findById(documentId)
+                .orElseThrow(() -> new RuntimeException("Document introuvable"));
+
+        // 📁 photos/{iu}
+        Path documentDir = Paths.get(photosBaseDir, document.getNumero());
+
+        // Créer le dossier s'il n'existe pas
+        if (!Files.exists(documentDir)) {
+            Files.createDirectories(documentDir);
+        }
+
+        // Nom fixe → remplacement automatique
+        Path photoPath = documentDir.resolve("photo.png");
+
+        // Remplacer si existe
+        Files.copy(
+                file.getInputStream(),
+                photoPath,
+                StandardCopyOption.REPLACE_EXISTING);
+
+        // Enregistrer le chemin en base
+        String relativePath = photosBaseDir + "/" + document.getNumero() + "/photo.png";
+        document.setPhoto(relativePath);
+        documentRepository.save(document);
+
+        return relativePath;
+    }
+
+    @Override
+    public Resource getPhoto(Long documentId) throws IOException {
+
+        Document document = documentRepository.findById(documentId)
+                .orElseThrow(() -> new RuntimeException("Document introuvable"));
+
+        if (document.getPhoto() == null) {
+            throw new RuntimeException("Aucune photo trouvée");
+        }
+
+        Path photoPath = Paths.get(document.getPhoto());
+
+        Resource resource = new UrlResource(photoPath.toUri());
+        if (!resource.exists()) {
+            throw new RuntimeException("Fichier photo introuvable");
+        }
+
+        return resource;
+    }
 }
