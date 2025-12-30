@@ -1,25 +1,16 @@
 package com.wuri.demowuri.mapper;
 
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
+
 
 import org.springframework.stereotype.Component;
 
 import com.wuri.demowuri.dto.PersonneDto;
-import com.wuri.demowuri.model.Document;
 import com.wuri.demowuri.model.Personne;
-import java.util.Collections;
 
 @Component
 public class PersonneMapper {
 
-private final DocumentMapper documentMapper;
-
-public PersonneMapper(DocumentMapper documentMapper){
- this.documentMapper=documentMapper;
-}
 
 public PersonneDto toDto(Personne personne) {
         if (personne == null) return null;

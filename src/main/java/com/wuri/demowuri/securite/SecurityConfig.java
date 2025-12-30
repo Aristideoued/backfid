@@ -63,7 +63,7 @@ public class SecurityConfig {
         .requestMatchers("/api/v1/qrcodes/getById/{id}", "/api/v1/qrcodes/verify","/api/v1/qrcodes/personne/{personneId}","/api/v1/qrcodes/scan/{code}","/api/v1/qrcodes/personne/{personneId}/actifs").hasAnyRole("ADMIN", "USER")
 
 
-          .requestMatchers("/api/v1/typedocuments/creer","/api/v1/typedocuments/getById/{id}", "/api/v1/typedocuments/all", "/api/v1/typedocuments/update/{id}", "/api/v1/typedocuments/delete/{id}")
+        .requestMatchers("/api/v1/typedocuments/creer","/api/v1/typedocuments/getById/{id}", "/api/v1/typedocuments/all", "/api/v1/typedocuments/update/{id}", "/api/v1/typedocuments/delete/{id}")
         .hasRole("ADMIN")
       //  .requestMatchers().hasAnyRole("ADMIN", "USER")
 

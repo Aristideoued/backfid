@@ -44,7 +44,7 @@ public class PersonneServiceImpl implements PersonneService {
         userDto.setIu(iu);
         
 
-        userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
+       // userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
 
         Personne user = personneMapper.toEntity(userDto);
         user.setEtat(EtatPersonne.ACTIF);
