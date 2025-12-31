@@ -2,6 +2,10 @@ package com.wuri.demowuri.model;
 
 import java.time.LocalDate;
 
+import org.hibernate.annotations.Type;
+
+import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
+import com.wuri.demowuri.dto.NumeroDocumentDto;
 import com.wuri.demowuri.enums.EtatDocument;
 import com.wuri.demowuri.enums.EtatPersonne;
 
@@ -24,8 +28,12 @@ public class Document {
     private Long id;
 
     // JSON de numéros
-    @Column(columnDefinition = "json")
-    private String numero;
+   /*  @Column(columnDefinition = "json")
+    private String numero;*/
+
+     @Type(JsonBinaryType.class)
+    @Column(columnDefinition = "jsonb")
+    private NumeroDocumentDto numero;
 
     private LocalDate dateDelivrance;
     private LocalDate dateExpiration;

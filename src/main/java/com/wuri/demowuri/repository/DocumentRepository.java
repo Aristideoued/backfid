@@ -19,7 +19,7 @@ public interface DocumentRepository extends JpaRepository<Document, Long> {
     List<Document> findByAutoriteId(Long autoriteId);
 
     // Optionnel : recherche par numéro exact
-    List<Document> findByNumero(String numero);
+   // List<Document> findByNumero(String numero);
 
     // Optionnel : recherche par date de délivrance
     List<Document> findByDateDelivrance(LocalDate dateDelivrance);

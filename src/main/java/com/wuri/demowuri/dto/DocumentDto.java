@@ -11,7 +11,7 @@ import lombok.Data;
 @Builder   // ✅ OBLIGATOIRE
 public class DocumentDto {
     private Long id;
-    private String numero;
+    private NumeroDocumentDto numero;
     private LocalDate dateDelivrance;
     private LocalDate dateExpiration;
     private String data;

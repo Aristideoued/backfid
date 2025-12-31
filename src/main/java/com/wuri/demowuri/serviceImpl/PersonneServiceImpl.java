@@ -111,7 +111,7 @@ public class PersonneServiceImpl implements PersonneService {
         user.setDateNaissance(userDto.getDateNaissance());
         user.setSexe(userDto.getSexe());
         user.setNationalite(userDto.getNationalite());
-        user.setPhoto(userDto.getPhoto());
+        user.setAdresse(userDto.getAdresse());
 
          if (userDto.getPassword() != null && !userDto.getPassword().isBlank()) {
             user.setPassword(passwordEncoder.encode(userDto.getPassword()));

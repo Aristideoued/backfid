@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.wuri.demowuri.dto.DocumentDto;
@@ -113,6 +114,7 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<DocumentDto> getByTypeLibelleAndPersonneId(String typeLibelle, Long personneId) {
         List<Document> documents = documentRepository.findByTypeLibelleAndPersonneId(typeLibelle, personneId);
         return documents.stream()
@@ -136,7 +138,7 @@ public class DocumentServiceImpl implements DocumentService {
                 .orElseThrow(() -> new RuntimeException("Document introuvable"));
 
         // 📁 photos/{iu}
-        Path documentDir = Paths.get(photosBaseDir, document.getNumero());
+        Path documentDir = Paths.get(photosBaseDir, document.getId().toString());
 
         // Créer le dossier s'il n'existe pas
         if (!Files.exists(documentDir)) {
@@ -153,7 +155,7 @@ public class DocumentServiceImpl implements DocumentService {
                 StandardCopyOption.REPLACE_EXISTING);
 
         // Enregistrer le chemin en base
-        String relativePath = photosBaseDir + "/" + document.getNumero() + "/photo.png";
+        String relativePath = photosBaseDir + "/" + document.getId() + "/photo.png";
         document.setPhoto(relativePath);
         documentRepository.save(document);
 
