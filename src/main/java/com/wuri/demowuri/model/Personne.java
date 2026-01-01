@@ -36,6 +36,8 @@ public class Personne {
     private String email;
     private String adresse;
 
+    private String lieuNaissance;
+
     private String photo; // URL ou chemin du fichier
 
     @Column(nullable = false, unique = true, length = 12)

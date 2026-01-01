@@ -25,6 +25,7 @@ public class PersonneDto {
     private String adresse;
     private String photo;
     private String iu;
+    private String lieuNaissance;
     private String password;
     private EtatPersonne etat;
 }

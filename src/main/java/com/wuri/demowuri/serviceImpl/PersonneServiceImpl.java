@@ -63,6 +63,10 @@ public class PersonneServiceImpl implements PersonneService {
     @Override
     public PersonneDto authentifier(String iu, String password) {
 
+        System.out.println("Mot de passe======= "+password);
+        System.out.println("IU======= "+iu);
+
+
         Personne personne = personneRepository.findByIu(iu)
                 .orElseThrow(() -> new RuntimeException("IU incorrect"));
 
