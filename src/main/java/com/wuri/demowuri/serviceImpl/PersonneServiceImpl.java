@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.wuri.demowuri.dto.PersonneDto;
+import com.wuri.demowuri.dto.PersonneVM;
 import com.wuri.demowuri.enums.EtatPersonne;
 import com.wuri.demowuri.mapper.PersonneMapper;
 import com.wuri.demowuri.model.Personne;
@@ -105,6 +106,28 @@ public class PersonneServiceImpl implements PersonneService {
                 .collect(Collectors.toList());
     }
 
+
+     @Override
+    public PersonneDto updatePersonneByIu(String iu, PersonneVM userDto) {
+        Personne user = personneRepository.findByIu(iu)
+                .orElseThrow(() -> new RuntimeException("Utilisateur introuvable"));
+
+
+        System.out.print(userDto.toString());
+        user.setNom(userDto.getNom());
+        user.setPrenom(userDto.getPrenom());
+        user.setDateNaissance(userDto.getDateNaissance());
+        user.setSexe(userDto.getSexe());
+        user.setLieuNaissance(userDto.getLieuNaissance());
+
+         if (userDto.getPassword() != null && !userDto.getPassword().isBlank()) {
+            user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+        }
+
+
+        return personneMapper.toDto(personneRepository.save(user));
+    }
+
     @Override
     public PersonneDto updatePersonne(Long id, PersonneDto userDto) {
         Personne user = personneRepository.findById(id)
@@ -114,6 +137,7 @@ public class PersonneServiceImpl implements PersonneService {
         user.setPrenom(userDto.getPrenom());
         user.setDateNaissance(userDto.getDateNaissance());
         user.setSexe(userDto.getSexe());
+        user.setLieuNaissance(userDto.getLieuNaissance());
         user.setNationalite(userDto.getNationalite());
         user.setAdresse(userDto.getAdresse());
 

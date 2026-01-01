@@ -7,6 +7,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.wuri.demowuri.dto.PersonneDto;
+import com.wuri.demowuri.dto.PersonneVM;
 
 public interface PersonneService {
 
@@ -21,6 +22,9 @@ public interface PersonneService {
     List<PersonneDto> getAllPersonnes();
 
     PersonneDto updatePersonne(Long id, PersonneDto userDto);
+        
+    PersonneDto updatePersonneByIu(String iu, PersonneVM userDto);
+
 
     void deletePersonne(Long id);
 

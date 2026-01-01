@@ -18,6 +18,7 @@
 /home/aristide/Bureau/Wuri/backfid/src/main/java/com/wuri/demowuri/dto/NotificationDto.java
 /home/aristide/Bureau/Wuri/backfid/src/main/java/com/wuri/demowuri/dto/NumeroDocumentDto.java
 /home/aristide/Bureau/Wuri/backfid/src/main/java/com/wuri/demowuri/dto/PersonneDto.java
+/home/aristide/Bureau/Wuri/backfid/src/main/java/com/wuri/demowuri/dto/PersonneVM.java
 /home/aristide/Bureau/Wuri/backfid/src/main/java/com/wuri/demowuri/dto/QrCodeDto.java
 /home/aristide/Bureau/Wuri/backfid/src/main/java/com/wuri/demowuri/dto/QrVerificationResponse.java
 /home/aristide/Bureau/Wuri/backfid/src/main/java/com/wuri/demowuri/dto/RoleDto.java

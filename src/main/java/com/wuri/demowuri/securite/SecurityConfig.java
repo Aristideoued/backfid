@@ -5,13 +5,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 
 @Configuration
 public class SecurityConfig {
@@ -55,7 +55,7 @@ public class SecurityConfig {
 
         .requestMatchers("/api/v1/personnes/creer", "/api/v1/personnes/update/{id}", "/api/v1/personnes/delete/{id}","/api/v1/personnes/all","/api/v1/personnes/{id}/activer","/api/v1/personnes/{id}/desactiver","/api/v1/personnes/{iu}/photo")
         .hasRole("ADMIN")
-        .requestMatchers("/api/v1/personnes/getById/{id}", "/api/v1/personnes/photo/{iu}","/api/v1/personnes/login","/api/v1/personnes/iu/{iu}").hasAnyRole("ADMIN", "USER")
+        .requestMatchers("/api/v1/personnes/getById/{id}", "/api/v1/personnes/photo/{iu}","/api/v1/personnes/login","/api/v1/personnes/iu/{iu}","/api/v1/personnes/update/{iu}").hasAnyRole("ADMIN", "USER")
 
 
         .requestMatchers("/api/v1/qrcodes/creer", "/api/v1/qrcodes/update/{id}", "/api/v1/qrcodes/delete/{id}","/api/v1/qrcodes/all")

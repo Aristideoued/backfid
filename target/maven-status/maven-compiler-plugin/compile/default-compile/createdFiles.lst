@@ -30,7 +30,6 @@ com/wuri/demowuri/services/QrCodeService.class
 com/wuri/demowuri/model/Eservice$EserviceBuilder.class
 com/wuri/demowuri/dto/AutoriteDto.class
 com/wuri/demowuri/controller/DocumentController.class
-com/wuri/demowuri/controller/PersonneController.class
 com/wuri/demowuri/dto/PersonneDto$PersonneDtoBuilder.class
 com/wuri/demowuri/enums/EtatQrCode.class
 com/wuri/demowuri/dto/QrCodeDto.class

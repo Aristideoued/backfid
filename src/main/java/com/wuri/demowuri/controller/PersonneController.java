@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.wuri.demowuri.dto.LoginDto;
 import com.wuri.demowuri.dto.PersonneDto;
+import com.wuri.demowuri.dto.PersonneVM;
 import com.wuri.demowuri.services.PersonneService;
 
 import lombok.RequiredArgsConstructor;
@@ -55,6 +56,11 @@ public class PersonneController {
     @PutMapping("/update/{id}")
     public PersonneDto update(@PathVariable Long id, @RequestBody PersonneDto personneDto) {
         return personneService.updatePersonne(id, personneDto);
+    }
+
+     @PutMapping("/update/{iu}")
+    public PersonneDto updateByIu(@PathVariable String iu, @RequestBody PersonneVM personneDto) {
+        return personneService.updatePersonneByIu(iu, personneDto);
     }
 
     @DeleteMapping("/delete/{id}")
