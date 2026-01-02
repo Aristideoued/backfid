@@ -25,7 +25,8 @@ public class SecurityConfig {
     http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
     http.authorizeHttpRequests(auth -> auth
         .requestMatchers(
-            "/api/auth/**"
+            "/api/auth/**",
+            "/api/v1/personnes/photo/{iu}"
 
         ).permitAll()
         .requestMatchers("/api/v1/autorites/creer", "/api/v1/autorites/update/{id}", "/api/v1/autorites/delete/{id}","/api/v1/autorites/all")
@@ -53,9 +54,9 @@ public class SecurityConfig {
         .requestMatchers("/api/v1/notifications/getById/{id}","/api/v1/notifications/personne/{personneId}","/api/v1/notifications/personne/{personneId}/unread").hasAnyRole("ADMIN", "USER")
 
 
-        .requestMatchers("/api/v1/personnes/creer", "/api/v1/personnes/update/{id}", "/api/v1/personnes/delete/{id}","/api/v1/personnes/all","/api/v1/personnes/{id}/activer","/api/v1/personnes/{id}/desactiver","/api/v1/personnes/{iu}/photo")
+        .requestMatchers("/api/v1/personnes/creer", "/api/v1/personnes/delete/{id}","/api/v1/personnes/all","/api/v1/personnes/{id}/activer","/api/v1/personnes/{id}/desactiver","/api/v1/personnes/{iu}/photo")
         .hasRole("ADMIN")
-        .requestMatchers("/api/v1/personnes/getById/{id}", "/api/v1/personnes/photo/{iu}","/api/v1/personnes/login","/api/v1/personnes/iu/{iu}","/api/v1/personnes/update/{iu}").hasAnyRole("ADMIN", "USER")
+        .requestMatchers("/api/v1/personnes/getById/{id}","/api/v1/personnes/login","/api/v1/personnes/iu/{iu}","/api/v1/personnes/update/**").hasAnyRole("ADMIN", "USER")
 
 
         .requestMatchers("/api/v1/qrcodes/creer", "/api/v1/qrcodes/update/{id}", "/api/v1/qrcodes/delete/{id}","/api/v1/qrcodes/all")

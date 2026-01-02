@@ -113,7 +113,7 @@ public class PersonneServiceImpl implements PersonneService {
                 .orElseThrow(() -> new RuntimeException("Utilisateur introuvable"));
 
 
-        System.out.print(userDto.toString());
+        System.out.print("===================== "+userDto.toString());
         user.setNom(userDto.getNom());
         user.setPrenom(userDto.getPrenom());
         user.setDateNaissance(userDto.getDateNaissance());

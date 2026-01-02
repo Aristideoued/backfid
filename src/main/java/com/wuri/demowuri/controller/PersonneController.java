@@ -53,13 +53,15 @@ public class PersonneController {
         return personneService.getAllPersonnes();
     }
 
-    @PutMapping("/update/{id}")
+    @PutMapping("/update/id/{id}")
     public PersonneDto update(@PathVariable Long id, @RequestBody PersonneDto personneDto) {
         return personneService.updatePersonne(id, personneDto);
     }
 
-     @PutMapping("/update/{iu}")
+     @PutMapping("/update/iu/{iu}")
     public PersonneDto updateByIu(@PathVariable String iu, @RequestBody PersonneVM personneDto) {
+
+
         return personneService.updatePersonneByIu(iu, personneDto);
     }
 
