@@ -26,7 +26,8 @@ public class SecurityConfig {
     http.authorizeHttpRequests(auth -> auth
         .requestMatchers(
             "/api/auth/**",
-            "/api/v1/personnes/photo/{iu}"
+            "/api/v1/personnes/photo/{iu}",
+            "/api/v1/documents/photo/{documentId}"
 
         ).permitAll()
         .requestMatchers("/api/v1/autorites/creer", "/api/v1/autorites/update/{id}", "/api/v1/autorites/delete/{id}","/api/v1/autorites/all")
@@ -43,7 +44,7 @@ public class SecurityConfig {
         .requestMatchers("/api/v1/users/show/{id}", "api/v1/users/liste").hasAnyRole("ADMIN", "USER")
         .requestMatchers("/api/v1/documents/creer", "/api/v1/documents/update/{id}", "/api/v1/documents/delete/{id}","/api/v1/documents/autorite/{autoriteId}","/api/v1/documents/type/{typeId}","/api/v1/documents/all","/api/v1/documents/{documentId}/photo")
         .hasRole("ADMIN")
-        .requestMatchers("/api/v1/documents/getById/{id}", "/api/v1/documents/search","/api/v1/documents/personnes/{id}/documents","/api/v1/documents/photo/{documentId}").hasAnyRole("ADMIN", "USER")
+        .requestMatchers("/api/v1/documents/getById/{id}", "/api/v1/documents/search","/api/v1/documents/personnes/{id}/documents").hasAnyRole("ADMIN", "USER")
 
         .requestMatchers("/api/v1/eservices/creer", "/api/v1/eservices/update/{id}", "/api/v1/eservices/delete/{id}")
         .hasRole("ADMIN")

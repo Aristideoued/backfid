@@ -9,7 +9,7 @@ import lombok.Data;
 
 @Data
 @Builder   // ✅ OBLIGATOIRE
-public class DocumentDto {
+public class DocumentVM {
     private Long id;
     private NumeroDocumentDto numero;
     private LocalDate dateDelivrance;
@@ -18,7 +18,7 @@ public class DocumentDto {
 
     private TypeDocumentDto typeDocument;
     private AutoriteDto autorite;
-    private Long personneId; 
+    private PersonneDto personne; 
     private EtatDocument etat;
     private String photo;
     private Integer taille;

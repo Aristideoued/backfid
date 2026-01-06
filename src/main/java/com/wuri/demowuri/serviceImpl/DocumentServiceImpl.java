@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.wuri.demowuri.dto.DocumentDto;
+import com.wuri.demowuri.dto.DocumentVM;
 import com.wuri.demowuri.enums.EtatDocument;
 import com.wuri.demowuri.mapper.DocumentMapper;
 import com.wuri.demowuri.model.AutoriteDelivrance;
@@ -61,7 +62,7 @@ public class DocumentServiceImpl implements DocumentService {
         existing.setDateDelivrance(documentDto.getDateDelivrance());
         existing.setDateExpiration(documentDto.getDateExpiration());
         existing.setData(documentDto.getData());
-
+        existing.setTaille(documentDto.getTaille());
         if (documentDto.getTypeDocument() != null) {
             TypeDocument type = typeDocumentRepository.findById(documentDto.getTypeDocument().getId())
                     .orElseThrow(() -> new RuntimeException("TypeDocument non trouvé"));
@@ -115,11 +116,9 @@ public class DocumentServiceImpl implements DocumentService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<DocumentDto> getByTypeLibelleAndPersonneId(String typeLibelle, Long personneId) {
-        List<Document> documents = documentRepository.findByTypeLibelleAndPersonneId(typeLibelle, personneId);
-        return documents.stream()
-                .map(documentMapper::toDto)
-                .collect(Collectors.toList());
+    public DocumentVM getByTypeLibelleAndPersonneIu(String typeLibelle, String iu) {
+        Document documents = documentRepository.findByTypeLibelleAndPersonneIu(typeLibelle, iu);
+        return documentMapper.toDto2(documents);
     }
 
     @Override

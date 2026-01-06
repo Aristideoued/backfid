@@ -13,6 +13,7 @@
 /home/aristide/Bureau/Wuri/backfid/src/main/java/com/wuri/demowuri/controller/UserController.java
 /home/aristide/Bureau/Wuri/backfid/src/main/java/com/wuri/demowuri/dto/AutoriteDto.java
 /home/aristide/Bureau/Wuri/backfid/src/main/java/com/wuri/demowuri/dto/DocumentDto.java
+/home/aristide/Bureau/Wuri/backfid/src/main/java/com/wuri/demowuri/dto/DocumentVM.java
 /home/aristide/Bureau/Wuri/backfid/src/main/java/com/wuri/demowuri/dto/EserviceDto.java
 /home/aristide/Bureau/Wuri/backfid/src/main/java/com/wuri/demowuri/dto/LoginDto.java
 /home/aristide/Bureau/Wuri/backfid/src/main/java/com/wuri/demowuri/dto/NotificationDto.java

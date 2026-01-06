@@ -40,6 +40,7 @@ public class Document {
 
     private String photo; // URL ou chemin du fichier
 
+    private Integer taille;
 
     // contenu numérique (URL ou chemin fichier)
     @Lob

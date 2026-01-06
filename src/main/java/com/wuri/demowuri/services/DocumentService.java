@@ -7,6 +7,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.wuri.demowuri.dto.DocumentDto;
+import com.wuri.demowuri.dto.DocumentVM;
 
 public interface DocumentService {
      DocumentDto create(DocumentDto dto);
@@ -21,7 +22,7 @@ public interface DocumentService {
 
     List<DocumentDto> getByAutorite(Long autoriteId);
 
-    List<DocumentDto> getByTypeLibelleAndPersonneId(String typeLibelle, Long personneId);
+    DocumentVM getByTypeLibelleAndPersonneIu(String typeLibelle, String iu);
 
     List<DocumentDto> getByPersonne(Long personneId);
 
