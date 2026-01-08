@@ -15,6 +15,9 @@ public class DocumentDto {
     private LocalDate dateDelivrance;
     private LocalDate dateExpiration;
     private String data;
+     private String lieuEtablissement;
+
+    private String contenu;
 
     private TypeDocumentDto typeDocument;
     private AutoriteDto autorite;

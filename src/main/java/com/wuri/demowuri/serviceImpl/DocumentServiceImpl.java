@@ -63,6 +63,8 @@ public class DocumentServiceImpl implements DocumentService {
         existing.setDateExpiration(documentDto.getDateExpiration());
         existing.setData(documentDto.getData());
         existing.setTaille(documentDto.getTaille());
+        existing.setContenu(documentDto.getContenu());
+        existing.setLieuEtablissement(documentDto.getLieuEtablissement());
         if (documentDto.getTypeDocument() != null) {
             TypeDocument type = typeDocumentRepository.findById(documentDto.getTypeDocument().getId())
                     .orElseThrow(() -> new RuntimeException("TypeDocument non trouvé"));

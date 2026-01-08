@@ -46,6 +46,8 @@ public class DocumentMapper {
                 .etat(document.getEtat()) // Enum EtatDocument
                 .photo(document.getPhoto())
                 .taille(document.getTaille())
+                .contenu(document.getContenu())
+                .lieuEtablissement(document.getLieuEtablissement())
                 .build();
     }
 
@@ -67,6 +69,8 @@ public class DocumentMapper {
                 .etat(document.getEtat()) // Enum EtatDocument
                 .photo(document.getPhoto())
                 .taille(document.getTaille())
+                .contenu(document.getContenu())
+                .lieuEtablissement(document.getLieuEtablissement())
                 .build();
     }
 
@@ -79,6 +83,8 @@ public class DocumentMapper {
                 .photo(dto.getPhoto())
                 .numero(dto.getNumero())
                 .dateDelivrance(dto.getDateDelivrance())
+                 .contenu(dto.getContenu())
+                .lieuEtablissement(dto.getLieuEtablissement())
                
                 .dateExpiration(dto.getDateExpiration())
                 .data(dto.getData())

@@ -38,6 +38,13 @@ public class Document {
     private LocalDate dateDelivrance;
     private LocalDate dateExpiration;
 
+    private String lieuEtablissement;
+
+    @Column(columnDefinition = "TEXT")
+    private String contenu;
+
+
+
     private String photo; // URL ou chemin du fichier
 
     private Integer taille;
