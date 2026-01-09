@@ -27,7 +27,8 @@ public class SecurityConfig {
         .requestMatchers(
             "/api/auth/**",
             "/api/v1/personnes/photo/{iu}",
-            "/api/v1/documents/photo/{documentId}"
+            "/api/v1/documents/photo/{documentId}",
+            "/api/v1/qrcodes/verify"
 
         ).permitAll()
         .requestMatchers("/api/v1/autorites/creer", "/api/v1/autorites/update/{id}", "/api/v1/autorites/delete/{id}","/api/v1/autorites/all")
@@ -60,9 +61,9 @@ public class SecurityConfig {
         .requestMatchers("/api/v1/personnes/getById/{id}","/api/v1/personnes/login","/api/v1/personnes/iu/{iu}","/api/v1/personnes/update/**").hasAnyRole("ADMIN", "USER")
 
 
-        .requestMatchers("/api/v1/qrcodes/creer", "/api/v1/qrcodes/update/{id}", "/api/v1/qrcodes/delete/{id}","/api/v1/qrcodes/all")
+        .requestMatchers( "/api/v1/qrcodes/update/{id}", "/api/v1/qrcodes/delete/{id}","/api/v1/qrcodes/all")
         .hasRole("ADMIN")
-        .requestMatchers("/api/v1/qrcodes/getById/{id}", "/api/v1/qrcodes/verify","/api/v1/qrcodes/personne/{personneId}","/api/v1/qrcodes/scan/{code}","/api/v1/qrcodes/personne/{personneId}/actifs").hasAnyRole("ADMIN", "USER")
+        .requestMatchers("/api/v1/qrcodes/creer","/api/v1/qrcodes/getById/{id}","/api/v1/qrcodes/personne/{personneId}","/api/v1/qrcodes/scan/{code}","/api/v1/qrcodes/personne/{personneId}/actifs").hasAnyRole("ADMIN", "USER")
 
 
         .requestMatchers("/api/v1/typedocuments/creer","/api/v1/typedocuments/getById/{id}", "/api/v1/typedocuments/all", "/api/v1/typedocuments/update/{id}", "/api/v1/typedocuments/delete/{id}")

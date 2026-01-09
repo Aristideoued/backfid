@@ -5,6 +5,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,13 +19,16 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.wuri.demowuri.dto.DocumentDto;
 import com.wuri.demowuri.dto.DocumentVM;
+import com.wuri.demowuri.dto.NotificationDto;
 import com.wuri.demowuri.enums.EtatDocument;
 import com.wuri.demowuri.mapper.DocumentMapper;
+import com.wuri.demowuri.mapper.NotificationMapper;
 import com.wuri.demowuri.model.AutoriteDelivrance;
 import com.wuri.demowuri.model.Document;
 import com.wuri.demowuri.model.TypeDocument;
 import com.wuri.demowuri.repository.AutoriteRepository;
 import com.wuri.demowuri.repository.DocumentRepository;
+import com.wuri.demowuri.repository.NotificationRepository;
 import com.wuri.demowuri.repository.TypeDocumentRepository;
 import com.wuri.demowuri.services.DocumentService;
 
@@ -34,7 +39,9 @@ import lombok.RequiredArgsConstructor;
 public class DocumentServiceImpl implements DocumentService {
 
     private final DocumentRepository documentRepository;
+    private final NotificationRepository notificationRepository;
     private final AutoriteRepository autoriteRepository;
+    private final NotificationMapper notificationMapper;
 
     private final DocumentMapper mapper;
 
@@ -116,11 +123,49 @@ public class DocumentServiceImpl implements DocumentService {
                 .collect(Collectors.toList());
     }
 
+   /*  @Override
+    @Transactional(readOnly = true)
+    public DocumentVM getByTypeLibelleAndPersonneIu1(String typeLibelle, String iu) {
+        Document documents = documentRepository.findByTypeLibelleAndPersonneIu(typeLibelle, iu);
+        return documentMapper.toDto2(documents);
+    }*/
+
     @Override
     @Transactional(readOnly = true)
     public DocumentVM getByTypeLibelleAndPersonneIu(String typeLibelle, String iu) {
-        Document documents = documentRepository.findByTypeLibelleAndPersonneIu(typeLibelle, iu);
-        return documentMapper.toDto2(documents);
+        Document document = documentRepository.findByTypeLibelleAndPersonneIu(typeLibelle, iu);
+
+        // Vérifier si la date d'expiration est dans moins de 3 mois
+        if (document.getDateExpiration() != null) {
+            LocalDate now = LocalDate.now();
+            LocalDate threeMonthsLater = now.plusMonths(3);
+
+            if (!document.getEtat().equals(EtatDocument.EXPIRE) &&
+                    
+                    !document.getDateExpiration().isAfter(threeMonthsLater)) {
+
+                // Vérifier s'il existe déjà une notification non lue pour ce document
+                boolean exists = notificationRepository.existsByPersonneIdAndTypeAndLuFalse(
+                        document.getPersonne().getId(),
+                        "EXPIRATION_DOCUMENT_" + document.getId());
+
+                if (!exists) {
+                    // Créer et enregistrer la notification
+                    NotificationDto notification = NotificationDto.builder()
+                            .type("EXPIRATION_DOCUMENT_" + document.getId())
+                            .message("Le document " + document.getType().getLibelle() + " va expirer le "
+                                    + document.getDateExpiration())
+                            .dateEmission(LocalDateTime.now())
+                            .lu(false)
+                            .personneId(document.getPersonne().getId())
+                            .build();
+
+                    notificationRepository.save(notificationMapper.toEntity(notification, document.getPersonne()));
+                }
+            }
+        }
+
+        return documentMapper.toDto2(document);
     }
 
     @Override

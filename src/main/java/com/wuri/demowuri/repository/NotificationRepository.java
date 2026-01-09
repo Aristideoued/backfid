@@ -13,5 +13,7 @@ public interface NotificationRepository extends JpaRepository<Notification, Long
     List<Notification> findByPersonneId(Long personneId);
 
     List<Notification> findByPersonneIdAndLuFalse(Long personneId);
+    
+    boolean existsByPersonneIdAndTypeAndLuFalse(Long personneId, String type);
 }
 
