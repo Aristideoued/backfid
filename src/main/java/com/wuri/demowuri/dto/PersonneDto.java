@@ -28,5 +28,6 @@ public class PersonneDto {
     private String lieuNaissance;
     private String password;
     private EtatPersonne etat;
+
 }
 

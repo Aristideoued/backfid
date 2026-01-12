@@ -53,8 +53,9 @@ public class PersonneController {
         return personneService.getAllPersonnes();
     }
 
-    @PutMapping("/update/id/{id}")
+    @PutMapping("/update/{id}")
     public PersonneDto update(@PathVariable Long id, @RequestBody PersonneDto personneDto) {
+        System.out.println("DTO=======> "+personneDto.toString());
         return personneService.updatePersonne(id, personneDto);
     }
 
