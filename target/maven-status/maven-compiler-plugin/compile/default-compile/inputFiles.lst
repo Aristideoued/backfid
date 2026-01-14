@@ -37,6 +37,7 @@
 /home/aristide/Bureau/Wuri/backfid/src/main/java/com/wuri/demowuri/mapper/PersonneMapper.java
 /home/aristide/Bureau/Wuri/backfid/src/main/java/com/wuri/demowuri/mapper/QrCodeMapper.java
 /home/aristide/Bureau/Wuri/backfid/src/main/java/com/wuri/demowuri/mapper/TypeDocumentMapper.java
+/home/aristide/Bureau/Wuri/backfid/src/main/java/com/wuri/demowuri/mapper/UserMapper.java
 /home/aristide/Bureau/Wuri/backfid/src/main/java/com/wuri/demowuri/model/AutoriteDelivrance.java
 /home/aristide/Bureau/Wuri/backfid/src/main/java/com/wuri/demowuri/model/Document.java
 /home/aristide/Bureau/Wuri/backfid/src/main/java/com/wuri/demowuri/model/Eservice.java

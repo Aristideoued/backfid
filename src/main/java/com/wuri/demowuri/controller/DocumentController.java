@@ -95,7 +95,7 @@ public class DocumentController {
     }
 
     @GetMapping("/personnes/{id}/documents")
-    public List<DocumentDto> getDocumentsByPersonne(@PathVariable Long id) {
+    public List<DocumentVM> getDocumentsByPersonne(@PathVariable Long id) {
         return documentService.getByPersonne(id);
     }
 

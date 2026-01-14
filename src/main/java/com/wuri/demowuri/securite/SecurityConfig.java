@@ -50,7 +50,7 @@ public class SecurityConfig {
         .requestMatchers("/api/v1/roles/show/{id}", "/api/v1/roles/liste").hasAnyRole("ADMIN", "USER")
 
         .requestMatchers("/api/v1/users/creer", "/api/v1/users/update/{id}",
-            "/api/v1/users/delete/{id}")
+            "/api/v1/users/delete/{id}","/api/v1/users/update/password/{id}")
         .hasRole("ADMIN")
         .requestMatchers("/api/v1/users/show/{id}", "api/v1/users/liste").hasAnyRole("ADMIN", "USER")
         .requestMatchers("/api/v1/documents/creer", "/api/v1/documents/update/{id}", "/api/v1/documents/delete/{id}","/api/v1/documents/autorite/{autoriteId}","/api/v1/documents/type/{typeId}","/api/v1/documents/all","/api/v1/documents/{documentId}/photo")

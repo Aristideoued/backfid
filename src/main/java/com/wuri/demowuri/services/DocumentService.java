@@ -24,7 +24,7 @@ public interface DocumentService {
 
     DocumentVM getByTypeLibelleAndPersonneIu(String typeLibelle, String iu);
 
-    List<DocumentDto> getByPersonne(Long personneId);
+    List<DocumentVM> getByPersonne(Long personneId);
 
     Resource getPhoto(Long documendId) throws IOException;
 

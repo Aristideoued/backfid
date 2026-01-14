@@ -169,11 +169,12 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
     @Override
-    public List<DocumentDto> getByPersonne(Long personneId) {
+     @Transactional(readOnly = true)
+    public List<DocumentVM> getByPersonne(Long personneId) {
 
         return documentRepository.findByPersonneId(personneId)
                 .stream()
-                .map(documentMapper::toDto)
+                .map(documentMapper::toDto2)
                 .toList();
     }
 
