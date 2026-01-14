@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.wuri.demowuri.dto.DocumentDto;
 import com.wuri.demowuri.dto.DocumentSimpleDto;
 import com.wuri.demowuri.dto.QrCodeDto;
 import com.wuri.demowuri.dto.QrVerificationResponse;
@@ -107,7 +106,11 @@ public class QrCodeController {
                 d.getDateExpiration(),          // dateExpiration
                 d.getNumero().getNip(), 
                 d.getNumero().getReference(),    // numéro sous forme de String
-                d.getEtat()                     // état
+                d.getEtat(),
+                d.getId(),
+                d.getContenu(),
+                d.getLieuEtablissement(),
+                d.getAutorite().getLibelle()               // état
         ))
         .toList();
 

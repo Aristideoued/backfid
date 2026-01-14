@@ -1,6 +1,5 @@
 package com.wuri.demowuri.serviceImpl;
 
-
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -10,10 +9,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.wuri.demowuri.dto.QrCodeDto;
+import com.wuri.demowuri.enums.EtatQrCode;
 import com.wuri.demowuri.mapper.QrCodeMapper;
 import com.wuri.demowuri.model.Personne;
 import com.wuri.demowuri.model.QrCode;
-import com.wuri.demowuri.enums.EtatQrCode;
 import com.wuri.demowuri.repository.PersonneRepository;
 import com.wuri.demowuri.repository.QrCodeRepository;
 import com.wuri.demowuri.securite.QrJwtService;
@@ -31,31 +30,33 @@ public class QrCodeServiceImpl implements QrCodeService {
     private final QrCodeMapper mapper;
     private final QrJwtService qrJwtService;
 
-   @Override
-public QrCodeDto create(QrCodeDto dto) {
+    @Override
+    public QrCodeDto create(QrCodeDto dto) {
 
-    Personne personne = personneRepository.findById(dto.getPersonneId())
-            .orElseThrow(() -> new RuntimeException("Personne introuvable"));
+        Personne personne = personneRepository.findById(dto.getPersonneId())
+                .orElseThrow(() -> new RuntimeException("Personne introuvable"));
 
-    Map<String, Object> claims = Map.of(
-            "personneId", personne.getId(),
-            "iu", personne.getIu(),
-            "scope", "IDENTITY_VERIFICATION"
-    );
+        repository.deleteExpiredByPersonne(
+                personne.getId(),
+                LocalDateTime.now());
 
-    String token = qrJwtService.generateQrToken(claims);
+        Map<String, Object> claims = Map.of(
+                "personneId", personne.getId(),
+                "iu", personne.getIu(),
+                "scope", "IDENTITY_VERIFICATION");
 
-    QrCode qrCode = QrCode.builder()
-            .token(token)
-            .dateCreation(LocalDateTime.now())
-            .dateExpiration(LocalDateTime.now().plusMinutes(5))
-            .etat(EtatQrCode.ACTIF)
-            .personne(personne)
-            .build();
+        String token = qrJwtService.generateQrToken(claims);
 
-    return mapper.toDto(repository.save(qrCode));
-}
+        QrCode qrCode = QrCode.builder()
+                .token(token)
+                .dateCreation(LocalDateTime.now())
+                .dateExpiration(LocalDateTime.now().plusMinutes(5))
+                .etat(EtatQrCode.ACTIF)
+                .personne(personne)
+                .build();
 
+        return mapper.toDto(repository.save(qrCode));
+    }
 
     @Override
     public QrCodeDto update(Long id, QrCodeDto dto) {
@@ -113,4 +114,3 @@ public QrCodeDto create(QrCodeDto dto) {
                 .orElseThrow(() -> new RuntimeException("QR Code invalide ou inexistant"));
     }
 }
-
