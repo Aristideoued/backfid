@@ -68,7 +68,7 @@ public class SecurityConfig {
 
         .requestMatchers("/api/v1/personnes/creer", "/api/v1/personnes/delete/{id}","/api/v1/personnes/all","/api/v1/personnes/{id}/activer","/api/v1/personnes/{id}/desactiver","/api/v1/personnes/{iu}/photo")
         .hasRole("ADMIN")
-        .requestMatchers("/api/v1/personnes/getById/{id}","/api/v1/personnes/login","/api/v1/personnes/iu/{iu}","/api/v1/personnes/update/**").hasAnyRole("ADMIN", "USER")
+        .requestMatchers("/api/v1/personnes/getById/{id}","/api/v1/personnes/login","/api/v1/personnes/iu/{iu}","/api/v1/personnes/update/**","/api/v1/personnes/verify/{iu}").hasAnyRole("ADMIN", "USER")
 
 
         .requestMatchers( "/api/v1/qrcodes/update/{id}", "/api/v1/qrcodes/delete/{id}","/api/v1/qrcodes/all")

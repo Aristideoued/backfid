@@ -1,13 +1,17 @@
 package com.wuri.demowuri.controller;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,9 +23,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.wuri.demowuri.dto.DocumentSimpleDto;
 import com.wuri.demowuri.dto.LoginDto;
 import com.wuri.demowuri.dto.PersonneDto;
 import com.wuri.demowuri.dto.PersonneVM;
+import com.wuri.demowuri.dto.QrVerificationResponse;
+import com.wuri.demowuri.enums.EtatDocument;
+import com.wuri.demowuri.model.Personne;
+import com.wuri.demowuri.repository.DocumentRepository;
+import com.wuri.demowuri.repository.PersonneRepository;
 import com.wuri.demowuri.services.PersonneService;
 
 import lombok.RequiredArgsConstructor;
@@ -32,6 +42,10 @@ import lombok.RequiredArgsConstructor;
 public class PersonneController {
 
     private final PersonneService personneService;
+
+    private final PersonneRepository personneRepository;
+
+    private final DocumentRepository documentRepository;
 
     @PostMapping("creer")
     public PersonneDto create(@RequestBody PersonneDto personneDto) {
@@ -55,13 +69,12 @@ public class PersonneController {
 
     @PutMapping("/update/{id}")
     public PersonneDto update(@PathVariable Long id, @RequestBody PersonneDto personneDto) {
-        System.out.println("DTO=======> "+personneDto.toString());
+        System.out.println("DTO=======> " + personneDto.toString());
         return personneService.updatePersonne(id, personneDto);
     }
 
-     @PutMapping("/update/iu/{iu}")
+    @PutMapping("/update/iu/{iu}")
     public PersonneDto updateByIu(@PathVariable String iu, @RequestBody PersonneVM personneDto) {
-
 
         return personneService.updatePersonneByIu(iu, personneDto);
     }
@@ -118,4 +131,49 @@ public class PersonneController {
                 .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"photo.png\"")
                 .body(photo);
     }
+
+    @GetMapping("/verify/{iu}")
+    @Transactional(readOnly = true)
+    public ResponseEntity<?> verify(@PathVariable String iu) {
+
+        Optional<Personne> optPersonne = personneRepository.findByIu(iu);
+
+        if (optPersonne.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(Map.of("statut", "INVALIDE"));
+        }
+
+        Personne personne = optPersonne.get();
+
+        List<DocumentSimpleDto> documents = documentRepository
+                .findByPersonneIdAndEtat(personne.getId(), EtatDocument.VALIDE)
+                .stream()
+                .map(d -> new DocumentSimpleDto(
+                        d.getType().getLibelle(),
+                        d.getDateDelivrance(),
+                        d.getDateExpiration(),
+                        d.getNumero() != null ? d.getNumero().getNip() : null,
+                        d.getNumero() != null ? d.getNumero().getReference() : null,
+                        d.getEtat(),
+                        d.getId(),
+                        d.getContenu(),
+                        d.getLieuEtablissement(),
+                        d.getAutorite() != null ? d.getAutorite().getLibelle() : null))
+                .toList();
+
+        return ResponseEntity.ok(
+                QrVerificationResponse.builder()
+                        .statut("VALIDE")
+                        .iu(personne.getIu())
+                        .nom(personne.getNom())
+                        .prenom(personne.getPrenom())
+                        .dateNaissance(personne.getDateNaissance())
+                        .sexe(personne.getSexe())
+                        .lieuNaissance(personne.getLieuNaissance())
+                        .nationalite(personne.getNationalite())
+                        .documentsValides(documents)
+                        .verificationTime(LocalDateTime.now())
+                        .build());
+    }
+
 }

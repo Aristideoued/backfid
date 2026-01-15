@@ -11,9 +11,11 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.wuri.demowuri.dto.PersonneDto;
 import com.wuri.demowuri.dto.PersonneVM;
@@ -43,9 +45,8 @@ public class PersonneServiceImpl implements PersonneService {
         // IU toujours généré côté backend
         String iu = generateUniqueIU();
         userDto.setIu(iu);
-        
 
-       // userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
+        // userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
 
         Personne user = personneMapper.toEntity(userDto);
         user.setEtat(EtatPersonne.ACTIF);
@@ -64,9 +65,8 @@ public class PersonneServiceImpl implements PersonneService {
     @Override
     public PersonneDto authentifier(String iu, String password) {
 
-        System.out.println("Mot de passe======= "+password);
-        System.out.println("IU======= "+iu);
-
+        System.out.println("Mot de passe======= " + password);
+        System.out.println("IU======= " + iu);
 
         Personne personne = personneRepository.findByIu(iu)
                 .orElseThrow(() -> new RuntimeException("IU incorrect"));
@@ -75,7 +75,7 @@ public class PersonneServiceImpl implements PersonneService {
             throw new RuntimeException("Mot de passe incorrect");
         }
 
-        return personneMapper.toDto(personne) ;
+        return personneMapper.toDto(personne);
     }
 
     private String generate12DigitNumber() {
@@ -92,10 +92,10 @@ public class PersonneServiceImpl implements PersonneService {
 
     @Override
     public PersonneDto getPersonneByIu(String iu) {
-        Personne personne= personneRepository.findByIu(iu)
-
-                .orElseThrow(() -> new RuntimeException("Utilisateur introuvable"));
-        return  personneMapper.toDto(personne);
+        Personne personne = personneRepository.findByIu(iu)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND, "Personne introuvable"));
+        return personneMapper.toDto(personne);
     }
 
     @Override
@@ -106,24 +106,21 @@ public class PersonneServiceImpl implements PersonneService {
                 .collect(Collectors.toList());
     }
 
-
-     @Override
+    @Override
     public PersonneDto updatePersonneByIu(String iu, PersonneVM userDto) {
         Personne user = personneRepository.findByIu(iu)
                 .orElseThrow(() -> new RuntimeException("Utilisateur introuvable"));
 
-
-        System.out.print("===================== "+userDto.toString());
+        System.out.print("===================== " + userDto.toString());
         user.setNom(userDto.getNom());
         user.setPrenom(userDto.getPrenom());
         user.setDateNaissance(userDto.getDateNaissance());
         user.setSexe(userDto.getSexe());
         user.setLieuNaissance(userDto.getLieuNaissance());
 
-         if (userDto.getPassword() != null && !userDto.getPassword().isBlank()) {
+        if (userDto.getPassword() != null && !userDto.getPassword().isBlank()) {
             user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         }
-
 
         return personneMapper.toDto(personneRepository.save(user));
     }
@@ -142,10 +139,9 @@ public class PersonneServiceImpl implements PersonneService {
         user.setAdresse(userDto.getAdresse());
         user.setEtat(userDto.getEtat());
 
-         if (userDto.getPassword() != null && !userDto.getPassword().isBlank()) {
+        if (userDto.getPassword() != null && !userDto.getPassword().isBlank()) {
             user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         }
-
 
         return personneMapper.toDto(personneRepository.save(user));
     }
@@ -185,7 +181,6 @@ public class PersonneServiceImpl implements PersonneService {
 
         return relativePath;
     }
-
 
     @Override
     public Resource getPhoto(String iu) throws IOException {
