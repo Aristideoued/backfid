@@ -9,6 +9,7 @@
 /home/aristide/Bureau/Wuri/backfid/src/main/java/com/wuri/demowuri/controller/PersonneController.java
 /home/aristide/Bureau/Wuri/backfid/src/main/java/com/wuri/demowuri/controller/QrCodeController.java
 /home/aristide/Bureau/Wuri/backfid/src/main/java/com/wuri/demowuri/controller/RoleController.java
+/home/aristide/Bureau/Wuri/backfid/src/main/java/com/wuri/demowuri/controller/StatsController.java
 /home/aristide/Bureau/Wuri/backfid/src/main/java/com/wuri/demowuri/controller/TypeDocumentController.java
 /home/aristide/Bureau/Wuri/backfid/src/main/java/com/wuri/demowuri/controller/UserController.java
 /home/aristide/Bureau/Wuri/backfid/src/main/java/com/wuri/demowuri/dto/AutoriteDto.java
@@ -24,6 +25,7 @@
 /home/aristide/Bureau/Wuri/backfid/src/main/java/com/wuri/demowuri/dto/QrCodeDto.java
 /home/aristide/Bureau/Wuri/backfid/src/main/java/com/wuri/demowuri/dto/QrVerificationResponse.java
 /home/aristide/Bureau/Wuri/backfid/src/main/java/com/wuri/demowuri/dto/RoleDto.java
+/home/aristide/Bureau/Wuri/backfid/src/main/java/com/wuri/demowuri/dto/StatsDto.java
 /home/aristide/Bureau/Wuri/backfid/src/main/java/com/wuri/demowuri/dto/TypeDocumentDto.java
 /home/aristide/Bureau/Wuri/backfid/src/main/java/com/wuri/demowuri/dto/UserDto.java
 /home/aristide/Bureau/Wuri/backfid/src/main/java/com/wuri/demowuri/enums/DocumentDataType.java
@@ -71,6 +73,7 @@
 /home/aristide/Bureau/Wuri/backfid/src/main/java/com/wuri/demowuri/serviceImpl/PersonneServiceImpl.java
 /home/aristide/Bureau/Wuri/backfid/src/main/java/com/wuri/demowuri/serviceImpl/QrCodeServiceImpl.java
 /home/aristide/Bureau/Wuri/backfid/src/main/java/com/wuri/demowuri/serviceImpl/RoleServiceImpl.java
+/home/aristide/Bureau/Wuri/backfid/src/main/java/com/wuri/demowuri/serviceImpl/StatsServiceImpl.java
 /home/aristide/Bureau/Wuri/backfid/src/main/java/com/wuri/demowuri/serviceImpl/TypeDocumentServiceImpl.java
 /home/aristide/Bureau/Wuri/backfid/src/main/java/com/wuri/demowuri/serviceImpl/UserServiceImpl.java
 /home/aristide/Bureau/Wuri/backfid/src/main/java/com/wuri/demowuri/services/AutoriteService.java

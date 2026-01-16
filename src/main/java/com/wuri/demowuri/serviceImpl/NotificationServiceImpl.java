@@ -35,6 +35,17 @@ public class NotificationServiceImpl implements NotificationService {
         return mapper.toDto(repository.save(entity));
     }
 
+
+       @Override
+    public NotificationDto read(Long id) {
+        Notification existing = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Notification non trouvée avec id : " + id));
+
+        existing.setLu(true);
+
+        return mapper.toDto(repository.save(existing));
+    }
+
     @Override
     public NotificationDto update(Long id, NotificationDto dto) {
         Notification existing = repository.findById(id)
@@ -88,6 +99,10 @@ public class NotificationServiceImpl implements NotificationService {
         return repository.findByPersonneIdAndLuFalse(personneId).stream()
                 .map(mapper::toDto)
                 .collect(Collectors.toList());
+    }
+ @Override
+    public long countUnreadByPersonne(Long personneId) {
+        return repository.countByPersonneIdAndLuFalse(personneId);
     }
 }
 

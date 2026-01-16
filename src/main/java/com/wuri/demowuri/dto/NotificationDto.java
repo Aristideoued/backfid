@@ -15,5 +15,5 @@ public class NotificationDto {
     private LocalDateTime dateEmission;
     private boolean lu;
 
-    private Long personneId; // On garde juste l'id de la personne pour simplifier le DTO
+    private Long personneId; 
 }

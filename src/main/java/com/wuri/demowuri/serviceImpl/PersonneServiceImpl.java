@@ -5,6 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,11 +18,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.wuri.demowuri.dto.NotificationDto;
 import com.wuri.demowuri.dto.PersonneDto;
 import com.wuri.demowuri.dto.PersonneVM;
 import com.wuri.demowuri.enums.EtatPersonne;
+import com.wuri.demowuri.mapper.NotificationMapper;
 import com.wuri.demowuri.mapper.PersonneMapper;
 import com.wuri.demowuri.model.Personne;
+import com.wuri.demowuri.repository.NotificationRepository;
 import com.wuri.demowuri.repository.PersonneRepository;
 import com.wuri.demowuri.services.PersonneService;
 
@@ -33,6 +37,8 @@ public class PersonneServiceImpl implements PersonneService {
 
     private final PersonneRepository personneRepository;
     private final PersonneMapper personneMapper;
+    private final NotificationRepository notificationRepository;
+    private final NotificationMapper notificationMapper;
 
     @Value("${app.photos.dir:photos}")
     private String photosBaseDir;
@@ -74,6 +80,15 @@ public class PersonneServiceImpl implements PersonneService {
         if (!passwordEncoder.matches(password, personne.getPassword())) {
             throw new RuntimeException("Mot de passe incorrect");
         }
+        NotificationDto notification = NotificationDto.builder()
+                .type("CONNEXION AU COMPTE")
+                .message(personne.getNom() + " " + personne.getPrenom() + " s'est connecté votre compte ")
+                .dateEmission(LocalDateTime.now())
+                .lu(false)
+                .personneId(personne.getId())
+                .build();
+
+        notificationRepository.save(notificationMapper.toEntity(notification, personne));
 
         return personneMapper.toDto(personne);
     }
@@ -121,6 +136,24 @@ public class PersonneServiceImpl implements PersonneService {
         if (userDto.getPassword() != null && !userDto.getPassword().isBlank()) {
             user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         }
+
+        // Vérifier s'il existe déjà une notification non lue pour ce document
+        /*
+         * boolean exists = notificationRepository.existsByPersonneIdAndTypeAndLuFalse(
+         * user.getId(),
+         * "CONNEXION AU COMPTE_" + user.getId());
+         */
+
+        // Créer et enregistrer la notification
+        NotificationDto notification = NotificationDto.builder()
+                .type("MODIFICATION DU COMPTE")
+                .message(user.getNom() + " " + user.getPrenom() + " a modifé votre compte ")
+                .dateEmission(LocalDateTime.now())
+                .lu(false)
+                .personneId(user.getId())
+                .build();
+
+        notificationRepository.save(notificationMapper.toEntity(notification, user));
 
         return personneMapper.toDto(personneRepository.save(user));
     }
