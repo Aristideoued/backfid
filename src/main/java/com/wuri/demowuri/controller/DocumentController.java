@@ -99,7 +99,7 @@ public class DocumentController {
         return documentService.getByPersonne(id);
     }
 
-    @PostMapping(value = "/{documentId}/photo", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(value = "/upload/{documentId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Map<String, String>> uploadPhoto(
             @PathVariable Long documentId,
             @RequestParam("file") MultipartFile file) throws IOException {

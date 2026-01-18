@@ -167,7 +167,8 @@ public class SecurityConfig {
                 "/api/v1/users/delete/*",
                 "/api/v1/users/update/password/*",
                 "/api/v1/documents/creer",
-                "/api/v1/documents/update/*",
+               
+                 "/api/v1/documents/upload/*",
                 "/api/v1/documents/delete/*",
                 "/api/v1/documents/autorite/*",
                 "/api/v1/documents/type/*",
